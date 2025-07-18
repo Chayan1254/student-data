@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Info Form</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      background-color: #1877f2;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #status-msg {
+      text-align: center;
+      margin-top: 15px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Student Info</h2>
+    <form id="student-form">
+      <input type="text" name="name" placeholder="Enter your name" required />
+      <input type="text" name="department" placeholder="Enter your department" required />
+      <button type="submit">Submit</button>
+    </form>
+    <p id="status-msg"></p>
+  </div>
+
+  <script>
+    // 🟨 Replace with your actual Public Key:
+    emailjs.init("user_xxxxxxxx");
+
+    document.getElementById("student-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      emailjs.send("service_7lfj8pt", "template_vovhecd", {
+        name: this.name.value,
+        department: this.department.value,
+      }).then(function (response) {
+        document.getElementById("status-msg").innerText = "Form submitted successfully!";
+      }, function (error) {
+        document.getElementById("status-msg").innerText = "Failed to send. Try again.";
+      });
+
+      this.reset();
+    });
+  </script>
+</body>
+</html>
